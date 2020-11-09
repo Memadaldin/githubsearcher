@@ -1,0 +1,27 @@
+@import "../../utils/common.scss";
+
+.message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $gray-2;
+  height: 35rem;
+  color: $gray-4;
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.empty-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 200px;
+    height: 200px;
+    margin: 1rem;
+  }
+  span {
+    font-weight: bold;
+  }
+}

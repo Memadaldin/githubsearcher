@@ -1,0 +1,19 @@
+@import "../../utils/common.scss";
+
+.list-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.5rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .list-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .list-container {
+    grid-template-columns: 1fr;
+  }
+}

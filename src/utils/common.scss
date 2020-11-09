@@ -1,0 +1,20 @@
+$box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+$primary-color-1: lightblue;
+$primary-color-2: #2ea44f;
+$gray-1: #fbfbfb;
+$gray-2: #efefef;
+$gray-3: lightgray;
+$gray-4: darkgray;
+$gray-5: gray;
+$white: white;
+$blue: blue;
+$primary-color-highlight: rgb(187, 224, 236);
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}

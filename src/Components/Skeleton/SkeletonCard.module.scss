@@ -1,0 +1,39 @@
+@import "../../utils/common.scss";
+
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  background-color: $gray-3;
+  height: 10rem;
+  margin: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba($gray-5, 0.3),
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-position: -100% 0%;
+  animation: loading 1.5s linear infinite;
+  @keyframes loading {
+    0% {
+      background-position: 0% 0%;
+    }
+    20% {
+      background-position: 50% 0%;
+    }
+    40% {
+      background-position: 100% 0%;
+    }
+    80% {
+      background-position: 200% 0%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+}
