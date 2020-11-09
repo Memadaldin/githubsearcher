@@ -13,6 +13,8 @@ interface CardListProps {
   searchTarget: string;
 }
 
+//here we handle the rendering of eather a list of card or a list of skeleton loaders
+
 const CardList = ({
   isLoading,
   items,
@@ -21,17 +23,17 @@ const CardList = ({
   return (
     <div className={styles["list-container"]} data-testid="card-list">
       {isLoading
-        ? Array.from(Array(12)).map(() => <SkeletonCard />)
+        ? Array.from(Array(12)).map((_, index) => <SkeletonCard key={index} />)
         : items.map((item) =>
             searchTarget === "users" ? (
               <UserCard
-                key={(item as User).id}
+                key={item.id}
                 item={item as User}
                 onClick={() => navigate(item.html_url, "_blank")}
               />
             ) : (
               <RepoCard
-                key={(item as Repo).id}
+                key={item.id}
                 item={item as Repo}
                 onClick={() => navigate(item.html_url, "_blank")}
               />

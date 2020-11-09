@@ -16,6 +16,10 @@ import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import EmptyMessage from "../../Components/EmptyMessage/EmptyMessage";
 import { useRetryVariable } from "../../utils/custom-hooks";
 import CardList from "../CardList/CardList";
+interface SearchBase {
+  searchTerm: string;
+  searchTarget: string;
+}
 
 const GitHubSearcher = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -25,23 +29,27 @@ const GitHubSearcher = (): React.ReactElement => {
   const cachedResults = useSelector(
     (state: RootState) => state.cachedSearchResults
   );
-
+  //state for select and inputs values with useReducer as a more dynamic approach
+  //point is typed "any" as point can either have searchTerm or not
   const [{ searchTerm, searchTarget }, setValues] = useReducer(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (base: any, point: any) => ({ ...base, ...point }),
+    (base: SearchBase, point: any) => ({ ...base, ...point }),
     {
       searchTerm: "",
       searchTarget: "repositories",
     }
   );
+  //custom-hook for retry by re-render when a request fails
   const [retryCounter, forceRetry] = useRetryVariable();
 
+  //handle debounced request and cache
   useEffect(() => {
     const debouncedFetch = debounce(
       () => dispatch(fetchSearchResults(searchTerm, searchTarget)),
       3000
     );
     const currentCachedResult = cachedResults[`${searchTarget}-${searchTerm}`];
+    //short circut the request if our edge cases meet
     if (searchTerm.length < 3) {
       dispatch(resetSearchResults());
     } else if (currentCachedResult) {

@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# Getting Started with GitHubSearcher
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is my own visualization for the task required.
 
-## Available Scripts
+## What to expect from this application
 
-In the project directory, you can run:
+it's a github searcher that has a simple form, the user types in the text field and specifies the target `users/repositories`, after `3 letters` the application makes a request for the desired data.
+The user can then visit the repository's page or the user's profile.
 
-### `yarn start`
+the data will be `cached` and the user will access it whenever he types the same query.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+if an `error occured` there will be an `error screen` with a `retry action` in order to not force the user to type his desired query again.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+if the request returns `zero items`, there will be an `empty screen` informing the user of that.
 
-### `yarn test`
+## Technologies used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- React-Router
+- React-Redux
+- React-Redux-toolkit
+- Redux-Persist
+- axios
+- lodash
+- React-Testing-library
 
-### `yarn build`
+## Explaining the solutions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Caching
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+I used the value of the text field and the value of the select and concatenated them into one `unique` key for eatch search result, example `repository-value`, `user-value`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+With that key we could now persist the data and fetch it again if existed.
 
-### `yarn eject`
+`hint`: I believe we could have used [axios-cache-adapter](https://www.npmjs.com/package/axios-cache-adapter) for caching, this would have made the whole use for redux and redux-persist redundant in our case.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Debouncing
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+used `_.debounce`, and made sure the debounce is after the `loading state` is fired for better ux.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Retry for error
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+implemented a custom-hook for retrying when a request fails
 
-## Learn More
+# redux-toolkit
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+I perferred using redux-toolkit as it provids a `boilerplate` out of the box for all redux utilities, helps keeping our code clean and simple.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# react-testing-liberary
+
+used it to test some cases instead of enzyme as it only cares for what the user is supposed to see as apposing to how he interacts with the application, also enzyme is not compatible with react 17 :D.
+
+# scss-modules
+
+I had a choice between scss-modules and css-in-js and there was no huge edge case that would make me use css-in-js

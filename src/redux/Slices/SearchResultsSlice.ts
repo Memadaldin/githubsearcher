@@ -3,11 +3,8 @@ import { AppThunk } from "../store";
 import { getSearchResults } from "../../api/githubAPI";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
-import {
-  SearchState,
-  SearchPayload,
-  CachPayload,
-} from "../../Interfaces/Searcher";
+import { SearchState, SearchPayload } from "../../Interfaces/Searcher";
+import cachedItemsSlice from "./cachedSearchResultsSlice";
 
 const persistConfig = {
   key: "cache",
@@ -21,8 +18,6 @@ const seachInitialState: SearchState = {
   error: null,
 };
 
-const cacheInitialState: any = {};
-
 function startLoading(state: SearchState) {
   state.isLoading = true;
 }
@@ -32,7 +27,7 @@ function loadingFailed(state: SearchState, action: PayloadAction<string>) {
   state.items = [];
   state.error = action.payload;
 }
-
+//slice for items got by axios request
 const items = createSlice({
   name: "searchItems",
   initialState: seachInitialState,
@@ -53,16 +48,6 @@ const items = createSlice({
   },
 });
 
-const cachedItems = createSlice({
-  name: "cachedSearchItems",
-  initialState: cacheInitialState,
-  reducers: {
-    updatedCachedItems(state, { payload }: PayloadAction<CachPayload>) {
-      state[payload.key] = payload.searchResults;
-    },
-  },
-});
-
 export const {
   getSearchResultStart,
   setSearchResult,
@@ -70,8 +55,9 @@ export const {
   resetSearchResults,
 } = items.actions;
 
-const { updatedCachedItems } = cachedItems.actions;
+const { updatedCachedItems } = cachedItemsSlice.actions;
 
+//here is where we handle our request, caching and error handling
 export const fetchSearchResults = (
   searchTerm: string,
   searchTarget: string
@@ -90,9 +76,12 @@ export const fetchSearchResults = (
   }
 };
 
+//it's not accoustomed while using redux-persist to persist a specific reducer and not the root
+//but in our case we only need to persist the cachedItemsReducer
+//whitch begs the question if we needed the data from server in redux anyway.
 const searchSlices = {
   searchResults: items.reducer,
-  cachedSearchResults: persistReducer(persistConfig, cachedItems.reducer),
+  cachedSearchResults: persistReducer(persistConfig, cachedItemsSlice.reducer),
 };
 
 export default searchSlices;

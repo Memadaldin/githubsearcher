@@ -9,7 +9,7 @@ interface selectProps {
 const Select = ({ onChange, value }: selectProps): React.ReactElement => (
   <select className={styles.select} value={value} onChange={onChange}>
     <option value="users">Users</option>
-    <option value="repositories" selected>
+    <option value="repositories" defaultValue="repositories">
       Repostories
     </option>
   </select>

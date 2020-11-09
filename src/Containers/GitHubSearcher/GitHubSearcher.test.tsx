@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import GitHubSearcher from "./GitHubSearcher";
 
 const mockDispatch = jest.fn();
