@@ -32,6 +32,8 @@ I used the value of the text field and the value of the select and concatenated 
 
 With that key we could now persist the data and fetch it again if existed.
 
+Used `session storage` for cached data to be deleted after session is done, if we used `localstorage` it will excceed the `quota` at some point
+
 `hint`: I believe we could have used [axios-cache-adapter](https://www.npmjs.com/package/axios-cache-adapter) for caching, this would have made the whole use for redux and redux-persist redundant in our case.
 
 # Debouncing

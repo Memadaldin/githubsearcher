@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "../store";
 import { getSearchResults } from "../../api/githubAPI";
-import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session";
 import { persistReducer } from "redux-persist";
 import { SearchState, SearchPayload } from "../../Interfaces/Searcher";
 import cachedItemsSlice from "./cachedSearchResultsSlice";
 
 const persistConfig = {
   key: "cache",
-  storage,
+  storage: storageSession,
 };
 
 const seachInitialState: SearchState = {
